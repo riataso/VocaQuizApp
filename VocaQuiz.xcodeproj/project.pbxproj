@@ -11,6 +11,8 @@
 		484773E72BFA21FD006AC081 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773E62BFA21FD006AC081 /* ContentView.swift */; };
 		484773E92BFA21FE006AC081 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 484773E82BFA21FE006AC081 /* Assets.xcassets */; };
 		484773EC2BFA21FE006AC081 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 484773EB2BFA21FE006AC081 /* Preview Assets.xcassets */; };
+		484773F72BFA2ECD006AC081 /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773F62BFA2ECD006AC081 /* WordItem.swift */; };
+		484773F92BFA2F92006AC081 /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773F82BFA2F92006AC081 /* WordList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		484773E62BFA21FD006AC081 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		484773E82BFA21FE006AC081 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		484773EB2BFA21FE006AC081 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		484773F62BFA2ECD006AC081 /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
+		484773F82BFA2F92006AC081 /* WordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +55,7 @@
 		484773E32BFA21FD006AC081 /* VocaQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				484773F52BFA2E0F006AC081 /* Domain */,
 				484773E42BFA21FD006AC081 /* VocaQuizApp.swift */,
 				484773E62BFA21FD006AC081 /* ContentView.swift */,
 				484773E82BFA21FE006AC081 /* Assets.xcassets */,
@@ -65,6 +70,15 @@
 				484773EB2BFA21FE006AC081 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		484773F52BFA2E0F006AC081 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				484773F62BFA2ECD006AC081 /* WordItem.swift */,
+				484773F82BFA2F92006AC081 /* WordList.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +152,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				484773E72BFA21FD006AC081 /* ContentView.swift in Sources */,
+				484773F92BFA2F92006AC081 /* WordList.swift in Sources */,
+				484773F72BFA2ECD006AC081 /* WordItem.swift in Sources */,
 				484773E52BFA21FD006AC081 /* VocaQuizApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
