@@ -19,9 +19,10 @@ struct WordList {
         return WordList(items: newItems)
     }
 
-    func delete(id: UUID) {
+    func delete(id: UUID) -> WordList {
         let newItems = self.items.filter { wordItem in
             wordItem.id != id
         }
+        return WordList(items: newItems)
     }
 }
