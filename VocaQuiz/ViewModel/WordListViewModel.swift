@@ -11,6 +11,7 @@ class WordListViewModel: ObservableObject {
     @Published var wordList: WordList = .init(items: [])
     @Published var inputContent: String = ""
     @Published var inputWord: String = ""
+    @Published var isCustomDialogShowing: Bool = false
 
     private let useCase = WordListUseCase.self
 
@@ -22,4 +23,12 @@ class WordListViewModel: ObservableObject {
         wordList = useCase.deleteTask(id: id, wordList: wordList)
     }
 
+    // MARK: -Dialog制御メソッド
+    func setNeedsToShowDialog() {
+        isCustomDialogShowing = true
+    }
+
+    func setNeedsToHideDialog() {
+        isCustomDialogShowing = false
+    }
 }
