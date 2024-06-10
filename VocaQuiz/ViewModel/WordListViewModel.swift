@@ -23,6 +23,11 @@ class WordListViewModel: ObservableObject {
         wordList = useCase.deleteTask(id: id, wordList: wordList)
     }
 
+    //入力欄の状態によってボタンを表示・非表示にする
+    var isButtonEnable: Bool {
+        inputWord.isEmpty || inputContent.isEmpty
+    }
+
     // MARK: -Dialog制御メソッド
     func setNeedsToShowDialog() {
         isCustomDialogShowing = true

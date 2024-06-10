@@ -14,30 +14,40 @@ struct CreateQuestionView: View {
 
     var body: some View {
 
-            NavigationStack(path: $path) {
-                ZStack {
-                    VStack {
-                        HStack {
-                        }
-                        .navigationTitle("問題作成ページ")
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
+        NavigationStack(path: $path) {
+            ZStack {
+                VStack {
+                    List {
+                        ForEach(viewModel.wordList.items) { item in
+                            HStack {
+                                Text("\(item.word)")
+                                Spacer()
                                 Button {
-                                    viewModel.setNeedsToShowDialog()
+
                                 } label: {
-                                    Image(systemName: "plus")
+                                    Text(">")
                                 }
                             }
                         }
-                        .navigationBarTitleDisplayMode(.inline)
-
                     }
-                    if viewModel.isCustomDialogShowing {
-                        PopupView(isPresented: $viewModel.isCustomDialogShowing)
+                }
+                .navigationTitle("問題一覧")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            viewModel.setNeedsToShowDialog()
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                if viewModel.isCustomDialogShowing {
+                    PopupView(isPresented: $viewModel.isCustomDialogShowing, viewModel: viewModel)
                 }
             }
         }
+     }
 }
 
 struct TaskListView_Previews: PreviewProvider {
@@ -48,6 +58,7 @@ struct TaskListView_Previews: PreviewProvider {
 
 struct PopupView: View {
     @Binding var isPresented: Bool
+    @ObservedObject var viewModel: WordListViewModel
 
     var body: some View {
         GeometryReader { geometry in
@@ -55,12 +66,11 @@ struct PopupView: View {
             ZStack {
                 PopupBackgroundView(isPresented: isPresented)
                     .transition(.opacity)
-                PopupContentsView(isPresented:$isPresented)
+                PopupContentsView(viewModel: viewModel, isPresented:$isPresented)
                     .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
                     .background(Color.white)
                     .cornerRadius(20)
             }
-
         }
     }
 }
@@ -79,22 +89,21 @@ struct PopupBackgroundView: View {
 
 // MARK: -タスクの追加画面
 struct PopupContentsView: View {
-    @StateObject private var viewModel: WordListViewModel = .init()
+    @ObservedObject var viewModel: WordListViewModel
     @Binding var isPresented: Bool
 
     var body: some View {
         VStack {
-            Text("新単語作成")
+            Text("単語を作成")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
                 .padding(.bottom, 20)
 
-            VStack(alignment: .leading)  {
+            VStack(alignment: .leading) {
                 Text("問題単語")
                     .font(.caption)
                     .foregroundStyle(.gray)
-
                 TextField("単語を入力してください", text: $viewModel.inputWord)
                     .frame(width: 250)
                     .padding(.bottom, 5)  // テキストフィールドと下線の間にスペースを追加
@@ -128,27 +137,30 @@ struct PopupContentsView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.gray)
+                        .background(Color.blue)
                         .cornerRadius(10)
                 }
                 .padding(.horizontal, 5)
 
-                Button(action: {
+                Button {
+                    viewModel.onTapCreateButton()
                     isPresented = false
-                }, label: {
+                    viewModel.inputContent = ""
+                    viewModel.inputWord = ""
+                } label: {
                     Text("作成")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.red)
+                        .background(viewModel.isButtonEnable ? Color.gray : Color.red)
                         .cornerRadius(10)
-                })
+                }
+                .disabled(viewModel.isButtonEnable)
                 .padding(.horizontal, 5)
+
             }
             .padding(.top, 20)
-
         }
-
     }
 }
