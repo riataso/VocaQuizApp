@@ -15,6 +15,9 @@ struct WordList {
     }
 
     func add(item: WordItem) -> WordList {
+        if item.content == "" || item.word == "" {
+            return WordList(items: self.items)
+        }
         let newItems = self.items + [item]
         return WordList(items: newItems)
     }

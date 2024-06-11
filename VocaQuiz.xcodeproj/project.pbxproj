@@ -14,6 +14,7 @@
 		484773F72BFA2ECD006AC081 /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773F62BFA2ECD006AC081 /* WordItem.swift */; };
 		484773F92BFA2F92006AC081 /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773F82BFA2F92006AC081 /* WordList.swift */; };
 		484773FC2BFA5296006AC081 /* WordListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773FB2BFA5296006AC081 /* WordListUseCase.swift */; };
+		489782672C06140C009A610E /* CreateQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489782662C06140C009A610E /* CreateQuestionView.swift */; };
 		48F2EE672C037CB70035CA50 /* WordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F2EE662C037CB70035CA50 /* WordListViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		484773F62BFA2ECD006AC081 /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
 		484773F82BFA2F92006AC081 /* WordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
 		484773FB2BFA5296006AC081 /* WordListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListUseCase.swift; sourceTree = "<group>"; };
+		489782662C06140C009A610E /* CreateQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuestionView.swift; sourceTree = "<group>"; };
 		48F2EE662C037CB70035CA50 /* WordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +61,7 @@
 		484773E32BFA21FD006AC081 /* VocaQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				489782652C061332009A610E /* VIew */,
 				484773FA2BFA4FD1006AC081 /* ViewModel */,
 				484773F52BFA2E0F006AC081 /* Domain */,
 				484773E42BFA21FD006AC081 /* VocaQuizApp.swift */,
@@ -93,6 +96,14 @@
 				48F2EE662C037CB70035CA50 /* WordListViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		489782652C061332009A610E /* VIew */ = {
+			isa = PBXGroup;
+			children = (
+				489782662C06140C009A610E /* CreateQuestionView.swift */,
+			);
+			path = VIew;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +178,7 @@
 			files = (
 				484773E72BFA21FD006AC081 /* ContentView.swift in Sources */,
 				484773FC2BFA5296006AC081 /* WordListUseCase.swift in Sources */,
+				489782672C06140C009A610E /* CreateQuestionView.swift in Sources */,
 				484773F92BFA2F92006AC081 /* WordList.swift in Sources */,
 				484773F72BFA2ECD006AC081 /* WordItem.swift in Sources */,
 				484773E52BFA21FD006AC081 /* VocaQuizApp.swift in Sources */,
