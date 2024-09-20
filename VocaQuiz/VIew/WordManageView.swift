@@ -1,67 +1,69 @@
 //
-//  CreateQuestionView.swift
+//  WordManageView.swift
 //  VocaQuiz
 //
-//  Created by 佐藤来 on 2024/05/28.
+//  Created by 佐藤来 on 2024/06/11.
 //
 
 import SwiftUI
 
-struct CreateQuestionView: View {
-    @StateObject  var viewModel: CreateQuestionViewModel = .init()
+struct WordManageView: View {
+    @ObservedObject  var viewModel: CreateQuestionViewModel = .init()
     @State var isPresented = false
-    @State var path = NavigationPath()
+    let items: WordItem
 
     var body: some View {
-
-        NavigationStack(path: $path) {
-            ZStack {
-                VStack {
-                    List {
-                        ForEach(viewModel.wordList.items) { item in
-                            NavigationLink(destination: WordManageView(items: item)) {
-                                Text("\(item.word)")
-                            }
-                        }
-                    }
-                    .listStyle(PlainListStyle()) 
-                }
-                .navigationTitle("問題一覧")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            viewModel.setNeedsToShowDialog()
-                        } label: {
-                            Image(systemName: "plus")
-                        }
+        VStack {
+            List {
+                Section(){
+                    HStack {
+                        Text("単語")
+                            .font(.title3)
+                        Text("\(items.word)")
+                            .foregroundStyle(.gray)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                 }
-                .navigationBarTitleDisplayMode(.inline)
-                if viewModel.isCustomDialogShowing {
-                    PopupView(isPresented: $viewModel.isCustomDialogShowing, viewModel: viewModel)
+                Section(){
+                    HStack {
+                        Text("単語内容")
+                            .font(.title3)
+                        Text("\(items.content)")
+                            .foregroundStyle(.gray)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                    }
                 }
             }
         }
-     }
-}
-
-struct TaskListView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateQuestionView()
+        //TODO 編集機能の追加
+//        .toolbar{
+//            ToolbarItem(placement: .confirmationAction) {
+//                Button {
+//                    viewModel.setNeedsToShowDialog()
+//                } label: {
+//                    Text("編集")
+//                }
+//            }
+//        }
+//        .overlay(
+//            viewModel.isCustomDialogShowing ? AnyView(
+//                PopupEditView(isPresented: $viewModel.isCustomDialogShowing, viewModel: viewModel)
+//                    .transition(.opacity)
+//            ) : AnyView(EmptyView())
+//        )
     }
 }
 
-struct PopupView: View {
+struct PopupEditView: View {
     @Binding var isPresented: Bool
     @ObservedObject var viewModel: CreateQuestionViewModel
-
 
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                PopupBackgroundView(isPresented: isPresented)
+                PopupBackgroundEditView(isPresented: isPresented)
                     .transition(.opacity)
-                PopupContentsView(viewModel: viewModel, isPresented:$isPresented)
+                PopupContentsEditView(viewModel: viewModel, isPresented:$isPresented)
                     .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
                     .background(Color.white)
                     .cornerRadius(20)
@@ -70,7 +72,7 @@ struct PopupView: View {
     }
 }
 
-struct PopupBackgroundView: View {
+struct PopupBackgroundEditView: View {
     @State var isPresented: Bool
 
     var body: some View {
@@ -82,31 +84,30 @@ struct PopupBackgroundView: View {
     }
 }
 
-// MARK: -タスクの追加画面
-struct PopupContentsView: View {
+// MARK: -タスク編集画面
+struct PopupContentsEditView: View {
     @ObservedObject var viewModel: CreateQuestionViewModel
     @Binding var isPresented: Bool
-
+    
     var body: some View {
         VStack {
-            Text("単語を作成")
+            Text("単語内容を編集")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.black)
                 .padding(.bottom, 20)
-
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading){
                 Text("問題単語")
                     .font(.caption)
                     .foregroundStyle(.gray)
                 TextField("単語を入力してください", text: $viewModel.inputWord)
                     .frame(width: 250)
-                    .padding(.bottom, 5)
+                    .padding(.bottom, 5)  // テキストフィールドと下線の間にスペースを追加
                     .overlay(
                         Rectangle()
-                            .frame(height: 2)
-                            .foregroundColor(.red),
-                        alignment: .bottom
+                            .frame(height: 2)  // 下線の高さを設定
+                            .foregroundColor(.red),  // 下線の色を赤に設定
+                        alignment: .bottom  // 下線をテキストフィールドの下に配置
                     )
                     .padding(.bottom, 20)
                 Text("問題内容・詳細")
@@ -114,16 +115,17 @@ struct PopupContentsView: View {
                     .foregroundStyle(.gray)
                 TextField("単語内容を入力してください", text: $viewModel.inputContent)
                     .frame(width: 250)
-                    .padding(.bottom, 5)
+                    .padding(.bottom, 5)  // テキストフィールドと下線の間にスペースを追加
                     .overlay(
                         Rectangle()
-                            .frame(height: 2)
-                            .foregroundColor(.red),
-                        alignment: .bottom
+                            .frame(height: 2)  // 下線の高さを設定
+                            .foregroundColor(.red),  // 下線の色を赤に設定
+                        alignment: .bottom  // 下線をテキストフィールドの下に配置
                     )
                     .padding(.bottom, 20)
             }
-            HStack{
+            
+            HStack {
                 Button {
                     isPresented = false
                 } label: {
@@ -136,14 +138,10 @@ struct PopupContentsView: View {
                         .cornerRadius(10)
                 }
                 .padding(.horizontal, 5)
-
                 Button {
-                    viewModel.onTapCreateButton()
-                    isPresented = false
-                    viewModel.inputContent = ""
-                    viewModel.inputWord = ""
+
                 } label: {
-                    Text("作成")
+                    Text("更新")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -151,11 +149,10 @@ struct PopupContentsView: View {
                         .background(viewModel.isButtonEnable ? Color.gray : Color.red)
                         .cornerRadius(10)
                 }
-                .disabled(viewModel.isButtonEnable)
                 .padding(.horizontal, 5)
-
             }
             .padding(.top, 20)
         }
+        .padding()
     }
 }
