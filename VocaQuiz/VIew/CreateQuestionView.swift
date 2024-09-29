@@ -1,14 +1,7 @@
-//
-//  CreateQuestionView.swift
-//  VocaQuiz
-//
-//  Created by 佐藤来 on 2024/05/28.
-//
-
 import SwiftUI
 
 struct CreateQuestionView: View {
-    @StateObject  var viewModel: CreateQuestionViewModel = .init()
+    @ObservedObject var viewModel: WordViewModel
     @State var isPresented = false
     @State var path = NavigationPath()
 
@@ -18,74 +11,74 @@ struct CreateQuestionView: View {
             ZStack {
                 VStack {
                     List {
-                        ForEach(viewModel.wordList.items) { item in
-                            NavigationLink(destination: WordManageView(items: item)) {
+                        ForEach(viewModel.allGetWordItem()) { item in
+                            NavigationLink(destination: WordManageView(viewModel: viewModel, wordItem: item)){
                                 Text("\(item.word)")
                             }
                         }
                     }
-                    .listStyle(PlainListStyle()) 
                 }
-                .navigationTitle("問題一覧")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            viewModel.setNeedsToShowDialog()
-                        } label: {
-                            Image(systemName: "plus")
-                        }
+                .listStyle(PlainListStyle())
+            }
+            .navigationTitle("問題一覧")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        viewModel.setNeedsToShowDialog(isShow: isPresented)
+                    } label: {
+                        Image(systemName: "plus")
                     }
                 }
-                .navigationBarTitleDisplayMode(.inline)
-                if viewModel.isCustomDialogShowing {
-                    PopupView(isPresented: $viewModel.isCustomDialogShowing, viewModel: viewModel)
-                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .fullScreenCover(isPresented: $viewModel.isCustomDialogShowing) {
+                PopupView(isPresented: $viewModel.isCustomDialogShowing, viewModel: viewModel)
             }
         }
-     }
+    }
 }
 
 struct TaskListView_Previews: PreviewProvider {
+
     static var previews: some View {
-        CreateQuestionView()
+        let viewModel = WordViewModel(wordItemUseCase: WordItemUseCase())
+        CreateQuestionView(viewModel: viewModel)
     }
 }
 
 struct PopupView: View {
     @Binding var isPresented: Bool
-    @ObservedObject var viewModel: CreateQuestionViewModel
-
+    @ObservedObject var viewModel: WordViewModel
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                PopupBackgroundView(isPresented: isPresented)
-                    .transition(.opacity)
-                PopupContentsView(viewModel: viewModel, isPresented:$isPresented)
-                    .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4)
+        ZStack {
+            // 背景を全画面に表示
+            Color.black.opacity(0.75)
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    isPresented = false
+                }
+
+            // ポップアップ内容を中央に表示
+            VStack {
+                PopupContentsView(isPresented: $isPresented, viewModel: viewModel)
+                    .frame(maxWidth: .infinity) // 幅を全体に設定
+                    .padding()
                     .background(Color.white)
                     .cornerRadius(20)
+                    .shadow(radius: 10)
+                    .padding(20)
             }
+            .padding()
         }
+        .transition(.move(edge: .bottom)) // 下から表示されるアニメーション
+        .animation(.easeInOut, value: isPresented) // アニメーションを適用
     }
 }
-
-struct PopupBackgroundView: View {
-    @State var isPresented: Bool
-
-    var body: some View {
-        Color.black.opacity(0.75)
-            .onTapGesture {
-                self.isPresented = false
-            }
-            .edgesIgnoringSafeArea(.all)
-    }
-}
-
-// MARK: -タスクの追加画面
+// MARK: - ポップアップの内容
 struct PopupContentsView: View {
-    @ObservedObject var viewModel: CreateQuestionViewModel
     @Binding var isPresented: Bool
+    @ObservedObject var viewModel: WordViewModel
 
     var body: some View {
         VStack {
@@ -100,7 +93,6 @@ struct PopupContentsView: View {
                     .font(.caption)
                     .foregroundStyle(.gray)
                 TextField("単語を入力してください", text: $viewModel.inputWord)
-                    .frame(width: 250)
                     .padding(.bottom, 5)
                     .overlay(
                         Rectangle()
@@ -109,11 +101,11 @@ struct PopupContentsView: View {
                         alignment: .bottom
                     )
                     .padding(.bottom, 20)
+
                 Text("問題内容・詳細")
                     .font(.caption)
                     .foregroundStyle(.gray)
                 TextField("単語内容を入力してください", text: $viewModel.inputContent)
-                    .frame(width: 250)
                     .padding(.bottom, 5)
                     .overlay(
                         Rectangle()
@@ -123,7 +115,7 @@ struct PopupContentsView: View {
                     )
                     .padding(.bottom, 20)
             }
-            HStack{
+            HStack {
                 Button {
                     isPresented = false
                 } label: {
@@ -138,7 +130,7 @@ struct PopupContentsView: View {
                 .padding(.horizontal, 5)
 
                 Button {
-                    viewModel.onTapCreateButton()
+                    viewModel.createWordItem(viewModel.inputWord, viewModel.inputContent)
                     isPresented = false
                     viewModel.inputContent = ""
                     viewModel.inputWord = ""
@@ -153,9 +145,9 @@ struct PopupContentsView: View {
                 }
                 .disabled(viewModel.isButtonEnable)
                 .padding(.horizontal, 5)
-
             }
             .padding(.top, 20)
         }
+        .padding()
     }
 }

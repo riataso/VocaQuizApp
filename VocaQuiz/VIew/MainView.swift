@@ -1,13 +1,8 @@
-//
-//  MainView.swift
-//  VocaQuiz
-//
-//  Created by 佐藤来 on 2024/09/20.
-//
-
 import SwiftUI
 
 struct MainView: View {
+    @StateObject var viewModel = WordViewModel(wordItemUseCase: WordItemUseCase())
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -36,7 +31,7 @@ struct MainView: View {
             Spacer()
                 .frame(height: 40)
 
-            NavigationLink(destination: CreateQuestionView()) {
+            NavigationLink(destination: CreateQuestionView(viewModel: viewModel)) {
                 Text("問題を編集")
                     .font(.title3)
                     .fontWeight(.medium)
@@ -58,6 +53,6 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView()
-}
+//#Preview {
+//    MainView()
+//}

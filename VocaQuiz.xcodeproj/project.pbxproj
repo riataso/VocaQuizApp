@@ -11,13 +11,13 @@
 		484773E72BFA21FD006AC081 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773E62BFA21FD006AC081 /* ContentView.swift */; };
 		484773E92BFA21FE006AC081 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 484773E82BFA21FE006AC081 /* Assets.xcassets */; };
 		484773EC2BFA21FE006AC081 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 484773EB2BFA21FE006AC081 /* Preview Assets.xcassets */; };
-		484773F72BFA2ECD006AC081 /* WordItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773F62BFA2ECD006AC081 /* WordItem.swift */; };
-		484773F92BFA2F92006AC081 /* WordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773F82BFA2F92006AC081 /* WordList.swift */; };
 		486881BD2C18735900E0F52D /* WordManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486881BC2C18735900E0F52D /* WordManageView.swift */; };
 		488B9EE42C9CB4BA00AF7DB0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9EE32C9CB4BA00AF7DB0 /* MainView.swift */; };
-		488B9EE72C9CC9AC00AF7DB0 /* CreateQuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9EE62C9CC9AC00AF7DB0 /* CreateQuestionViewModel.swift */; };
 		488B9EE92C9DB13E00AF7DB0 /* WordManageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9EE82C9DB13E00AF7DB0 /* WordManageUseCase.swift */; };
+		488B9EED2C9DBC0800AF7DB0 /* WordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9EEC2C9DBC0800AF7DB0 /* WordRepository.swift */; };
+		488B9EEF2C9DC8FF00AF7DB0 /* WordEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9EEE2C9DC8FF00AF7DB0 /* WordEntity.swift */; };
 		489782672C06140C009A610E /* CreateQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489782662C06140C009A610E /* CreateQuestionView.swift */; };
+		48AD112D2CA5B51A004702E9 /* WordVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AD112C2CA5B51A004702E9 /* WordVIewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,13 +26,13 @@
 		484773E62BFA21FD006AC081 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		484773E82BFA21FE006AC081 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		484773EB2BFA21FE006AC081 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		484773F62BFA2ECD006AC081 /* WordItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordItem.swift; sourceTree = "<group>"; };
-		484773F82BFA2F92006AC081 /* WordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordList.swift; sourceTree = "<group>"; };
 		486881BC2C18735900E0F52D /* WordManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordManageView.swift; sourceTree = "<group>"; };
 		488B9EE32C9CB4BA00AF7DB0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		488B9EE62C9CC9AC00AF7DB0 /* CreateQuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuestionViewModel.swift; sourceTree = "<group>"; };
 		488B9EE82C9DB13E00AF7DB0 /* WordManageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordManageUseCase.swift; sourceTree = "<group>"; };
+		488B9EEC2C9DBC0800AF7DB0 /* WordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRepository.swift; sourceTree = "<group>"; };
+		488B9EEE2C9DC8FF00AF7DB0 /* WordEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntity.swift; sourceTree = "<group>"; };
 		489782662C06140C009A610E /* CreateQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuestionView.swift; sourceTree = "<group>"; };
+		48AD112C2CA5B51A004702E9 /* WordVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordVIewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +65,9 @@
 		484773E32BFA21FD006AC081 /* VocaQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				488B9EEA2C9DB97900AF7DB0 /* Repository */,
 				489782652C061332009A610E /* VIew */,
 				484773FA2BFA4FD1006AC081 /* ViewModel */,
-				484773F52BFA2E0F006AC081 /* Domain */,
 				484773E42BFA21FD006AC081 /* VocaQuizApp.swift */,
 				484773E62BFA21FD006AC081 /* ContentView.swift */,
 				484773E82BFA21FE006AC081 /* Assets.xcassets */,
@@ -84,22 +84,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		484773F52BFA2E0F006AC081 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				484773F62BFA2ECD006AC081 /* WordItem.swift */,
-				484773F82BFA2F92006AC081 /* WordList.swift */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
 		484773FA2BFA4FD1006AC081 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				488B9EE62C9CC9AC00AF7DB0 /* CreateQuestionViewModel.swift */,
 				488B9EE82C9DB13E00AF7DB0 /* WordManageUseCase.swift */,
+				48AD112C2CA5B51A004702E9 /* WordVIewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		488B9EEA2C9DB97900AF7DB0 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				488B9EEC2C9DBC0800AF7DB0 /* WordRepository.swift */,
+				488B9EEE2C9DC8FF00AF7DB0 /* WordEntity.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		489782652C061332009A610E /* VIew */ = {
@@ -183,13 +183,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				488B9EE92C9DB13E00AF7DB0 /* WordManageUseCase.swift in Sources */,
-				488B9EE72C9CC9AC00AF7DB0 /* CreateQuestionViewModel.swift in Sources */,
 				484773E72BFA21FD006AC081 /* ContentView.swift in Sources */,
+				488B9EEF2C9DC8FF00AF7DB0 /* WordEntity.swift in Sources */,
 				488B9EE42C9CB4BA00AF7DB0 /* MainView.swift in Sources */,
 				489782672C06140C009A610E /* CreateQuestionView.swift in Sources */,
-				484773F92BFA2F92006AC081 /* WordList.swift in Sources */,
-				484773F72BFA2ECD006AC081 /* WordItem.swift in Sources */,
+				488B9EED2C9DBC0800AF7DB0 /* WordRepository.swift in Sources */,
 				484773E52BFA21FD006AC081 /* VocaQuizApp.swift in Sources */,
+				48AD112D2CA5B51A004702E9 /* WordVIewModel.swift in Sources */,
 				486881BD2C18735900E0F52D /* WordManageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
