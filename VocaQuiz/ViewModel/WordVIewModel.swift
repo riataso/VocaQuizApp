@@ -1,7 +1,7 @@
 import Foundation
 
 class WordViewModel: ObservableObject{
-    @Published var wordItem : [WordEntity] = []
+    @Published var wordItem: WordEntity?
     @Published var isCustomDialogShowing: Bool = false
     @Published var inputContent: String = ""
     @Published var inputWord: String = ""
@@ -13,13 +13,18 @@ class WordViewModel: ObservableObject{
     }
 
     @MainActor
-    func createWordItem(_ word: String, _ content: String){
+    func createWordItem(_ word: String, _ content: String) {
         wordItemUseCase.onTapCreateButton(word, content)
     }
 
     @MainActor
-    func getWordItem(_ id: UUID) -> [WordEntity]{
-        return wordItemUseCase.fetchWordItem(id)
+    func getWordItem(_ id: UUID) async {
+        do {
+            let wordData = try await wordItemUseCase.fetchWordItem(id)
+            self.wordItem = wordData
+        } catch {
+            print("値の取得に失敗しました: \(error)")
+        }
     }
 
     @MainActor
@@ -35,5 +40,10 @@ class WordViewModel: ObservableObject{
     // MARK: -Dialog制御メソッド
     func setNeedsToShowDialog(isShow: Bool) {
         isCustomDialogShowing = isShow ? false : true
+    }
+
+    // ViewModelが再利用される場合にデータをリセットするメソッド
+    func resetId() {
+        self.wordItem = nil
     }
 }

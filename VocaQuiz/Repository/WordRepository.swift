@@ -1,10 +1,3 @@
-//
-//  WordRepository.swift
-//  VocaQuiz
-//
-//  Created by 佐藤来 on 2024/09/20.
-//
-
 import Foundation
 import SwiftData
 
@@ -29,10 +22,7 @@ class WordRepository {
     }
 
     @MainActor
-    func fetch(targetId: UUID) -> [WordEntity] {
-        return fetchAll().filter{ $0.id == targetId }
+    func fetch(targetId: UUID) async throws -> WordEntity? {
+        return fetchAll().first(where: { $0.id == targetId })
     }
-
 }
-
-

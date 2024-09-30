@@ -1,38 +1,43 @@
-
-
 import SwiftUI
 
 struct WordManageView: View {
     @ObservedObject  var viewModel: WordViewModel
     @State var isPresented = false
-    // TODO: WordEntityからの呼び出しをなくす(IDをもとに取得するよう変更)
-    var wordItem: WordEntity
-
+    public var wordId: UUID
 
     var body: some View {
         VStack {
-            List {
-                Section(){
-                    HStack {
-                        Text("単語")
-                            .font(.title3)
-                        Text("\(wordItem.word)")
-                            .foregroundStyle(.gray)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
+            if let wordData = viewModel.wordItem {
+                List {
+                    Section(){
+                        HStack {
+                            Text("単語")
+                                .font(.title3)
+                            Text("\(wordData.word)")
+                                .foregroundStyle(.gray)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
+                    }
+                    Section(){
+                        HStack {
+                            Text("単語内容")
+                                .font(.title3)
+                            Text("\(wordData.content)")
+                                .foregroundStyle(.gray)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
                     }
                 }
-                Section(){
-                    HStack {
-                        Text("単語内容")
-                            .font(.title3)
-                        Text("\(wordItem.content)")
-                            .foregroundStyle(.gray)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
-                }
+            } else {
+                Text("Loading...")
             }
         }
-
+        .onAppear {
+               viewModel.resetId()
+             Task {
+                 await viewModel.getWordItem(wordId)
+             }
+         }
     }
 }
 

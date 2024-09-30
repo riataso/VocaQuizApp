@@ -1,14 +1,12 @@
-//
-//  WordManageUseCase.swift
-//  VocaQuiz
-//
-//  Created by 佐藤来 on 2024/09/20.
-//
-
 import Foundation
 
 class WordItemUseCase {
-    private let repository = WordRepository()
+    private let repository: WordRepository
+
+    init() {
+        let wordRepository = WordRepository()
+        self.repository = wordRepository
+    }
 
     @MainActor
     func onTapCreateButton(_ word: String,_ content: String) {
@@ -21,8 +19,8 @@ class WordItemUseCase {
     }
 
     @MainActor
-    func fetchWordItem(_ id: UUID) -> [WordEntity] {
-        return repository.fetch(targetId: id)
+    func fetchWordItem(_ id: UUID) async throws -> WordEntity? {
+        return try await repository.fetch(targetId: id)
     }
 }
 
