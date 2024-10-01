@@ -1,62 +1,49 @@
-//
-//  WordManageView.swift
-//  VocaQuiz
-//
-//  Created by 佐藤来 on 2024/06/11.
-//
-
 import SwiftUI
 
 struct WordManageView: View {
-    @ObservedObject  var viewModel: CreateQuestionViewModel = .init()
+    @ObservedObject  var viewModel: WordViewModel
     @State var isPresented = false
-    let items: WordItem
+    public var wordId: UUID
 
     var body: some View {
         VStack {
-            List {
-                Section(){
-                    HStack {
-                        Text("単語")
-                            .font(.title3)
-                        Text("\(items.word)")
-                            .foregroundStyle(.gray)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
+            if let wordData = viewModel.wordItem {
+                List {
+                    Section(){
+                        HStack {
+                            Text("単語")
+                                .font(.title3)
+                            Text("\(wordData.word)")
+                                .foregroundStyle(.gray)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
+                    }
+                    Section(){
+                        HStack {
+                            Text("単語内容")
+                                .font(.title3)
+                            Text("\(wordData.content)")
+                                .foregroundStyle(.gray)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                        }
                     }
                 }
-                Section(){
-                    HStack {
-                        Text("単語内容")
-                            .font(.title3)
-                        Text("\(items.content)")
-                            .foregroundStyle(.gray)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
-                }
+            } else {
+                Text("Loading...")
             }
         }
-        //TODO 編集機能の追加
-//        .toolbar{
-//            ToolbarItem(placement: .confirmationAction) {
-//                Button {
-//                    viewModel.setNeedsToShowDialog()
-//                } label: {
-//                    Text("編集")
-//                }
-//            }
-//        }
-//        .overlay(
-//            viewModel.isCustomDialogShowing ? AnyView(
-//                PopupEditView(isPresented: $viewModel.isCustomDialogShowing, viewModel: viewModel)
-//                    .transition(.opacity)
-//            ) : AnyView(EmptyView())
-//        )
+        .onAppear {
+               viewModel.resetId()
+             Task {
+                 await viewModel.getWordItem(wordId)
+             }
+         }
     }
 }
 
 struct PopupEditView: View {
     @Binding var isPresented: Bool
-    @ObservedObject var viewModel: CreateQuestionViewModel
+    @ObservedObject var viewModel: WordViewModel
 
     var body: some View {
         GeometryReader { geometry in
@@ -72,87 +59,87 @@ struct PopupEditView: View {
     }
 }
 
-struct PopupBackgroundEditView: View {
-    @State var isPresented: Bool
+        struct PopupBackgroundEditView: View {
+            @State var isPresented: Bool
 
-    var body: some View {
-        Color.black.opacity(0.75)
-            .onTapGesture {
-                self.isPresented = false
+            var body: some View {
+                Color.black.opacity(0.75)
+                    .onTapGesture {
+                        self.isPresented = false
+                    }
+                    .edgesIgnoringSafeArea(.all)
             }
-            .edgesIgnoringSafeArea(.all)
-    }
-}
-
-// MARK: -タスク編集画面
-struct PopupContentsEditView: View {
-    @ObservedObject var viewModel: CreateQuestionViewModel
-    @Binding var isPresented: Bool
-    
-    var body: some View {
-        VStack {
-            Text("単語内容を編集")
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
-                .padding(.bottom, 20)
-            VStack(alignment: .leading){
-                Text("問題単語")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-                TextField("単語を入力してください", text: $viewModel.inputWord)
-                    .frame(width: 250)
-                    .padding(.bottom, 5)  // テキストフィールドと下線の間にスペースを追加
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 2)  // 下線の高さを設定
-                            .foregroundColor(.red),  // 下線の色を赤に設定
-                        alignment: .bottom  // 下線をテキストフィールドの下に配置
-                    )
-                    .padding(.bottom, 20)
-                Text("問題内容・詳細")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-                TextField("単語内容を入力してください", text: $viewModel.inputContent)
-                    .frame(width: 250)
-                    .padding(.bottom, 5)  // テキストフィールドと下線の間にスペースを追加
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 2)  // 下線の高さを設定
-                            .foregroundColor(.red),  // 下線の色を赤に設定
-                        alignment: .bottom  // 下線をテキストフィールドの下に配置
-                    )
-                    .padding(.bottom, 20)
-            }
-            
-            HStack {
-                Button {
-                    isPresented = false
-                } label: {
-                    Text("閉じる")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal, 5)
-                Button {
-
-                } label: {
-                    Text("更新")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(viewModel.isButtonEnable ? Color.gray : Color.red)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal, 5)
-            }
-            .padding(.top, 20)
         }
-        .padding()
-    }
-}
+
+        // MARK: -タスク編集画面
+        struct PopupContentsEditView: View {
+            @ObservedObject var viewModel: WordViewModel
+            @Binding var isPresented: Bool
+
+            var body: some View {
+                VStack {
+                    Text("単語内容を編集")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                        .padding(.bottom, 20)
+                    VStack(alignment: .leading){
+                        Text("問題単語")
+                            .font(.caption)
+                            .foregroundStyle(.gray)
+                        TextField("単語を入力してください", text: $viewModel.inputWord)
+                            .frame(width: 250)
+                            .padding(.bottom, 5)  // テキストフィールドと下線の間にスペースを追加
+                            .overlay(
+                                Rectangle()
+                                    .frame(height: 2)  // 下線の高さを設定
+                                    .foregroundColor(.red),  // 下線の色を赤に設定
+                                alignment: .bottom  // 下線をテキストフィールドの下に配置
+                            )
+                            .padding(.bottom, 20)
+                        Text("問題内容・詳細")
+                            .font(.caption)
+                            .foregroundStyle(.gray)
+                        TextField("単語内容を入力してください", text: $viewModel.inputContent)
+                            .frame(width: 250)
+                            .padding(.bottom, 5)  // テキストフィールドと下線の間にスペースを追加
+                            .overlay(
+                                Rectangle()
+                                    .frame(height: 2)  // 下線の高さを設定
+                                    .foregroundColor(.red),  // 下線の色を赤に設定
+                                alignment: .bottom  // 下線をテキストフィールドの下に配置
+                            )
+                            .padding(.bottom, 20)
+                    }
+
+                    HStack {
+                        Button {
+                            isPresented = false
+                        } label: {
+                            Text("閉じる")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal, 5)
+                        Button {
+
+                        } label: {
+                            Text("更新")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(viewModel.isButtonEnable ? Color.gray : Color.red)
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal, 5)
+                    }
+                    .padding(.top, 20)
+                }
+                .padding()
+            }
+        }
