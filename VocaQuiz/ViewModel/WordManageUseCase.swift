@@ -9,7 +9,7 @@ class WordItemUseCase {
     }
 
     @MainActor
-    func onTapCreateButton(_ word: String,_ content: String) {
+    func createWordItem(_ word: String,_ content: String) {
         repository.create(word, content)
     }
 
@@ -21,6 +21,11 @@ class WordItemUseCase {
     @MainActor
     func fetchWordItem(_ id: UUID) async throws -> WordEntity? {
         return try await repository.fetch(targetId: id)
+    }
+
+    @MainActor
+    func deleteWordItem(_ id: UUID) async {
+        await repository.delete(targetId: id)
     }
 }
 

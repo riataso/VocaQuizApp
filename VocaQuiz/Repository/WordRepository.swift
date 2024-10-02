@@ -25,4 +25,10 @@ class WordRepository {
     func fetch(targetId: UUID) async throws -> WordEntity? {
         return fetchAll().first(where: { $0.id == targetId })
     }
+
+    @MainActor
+    func delete(targetId: UUID) async {
+        let deleteItem = fetchAll().first(where: { $0.id == targetId })
+        modelContainer?.mainContext.delete(deleteItem!)
+    }
 }
