@@ -3,42 +3,67 @@ import SwiftUI
 struct WordManageView: View {
     @ObservedObject  var viewModel: WordViewModel
     @State var isPresented = false
+    @State private var isShowAlert = false
+    @State private var isLoading = false
+    @Environment(\.dismiss) var dismiss  // dismiss環境変数
     public var wordId: UUID
 
     var body: some View {
-        VStack {
-            if let wordData = viewModel.wordItem {
-                List {
-                    Section(){
-                        HStack {
-                            Text("単語")
-                                .font(.title3)
-                            Text("\(wordData.word)")
-                                .foregroundStyle(.gray)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+            VStack {
+                if let wordData = viewModel.wordItem {
+                    List {
+                        Section(){
+                            HStack {
+                                Text("単語")
+                                    .font(.title3)
+                                Text("\(wordData.word)")
+                                    .foregroundStyle(.gray)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                        }
+                        Section(){
+                            HStack {
+                                Text("単語内容")
+                                    .font(.title3)
+                                Text("\(wordData.content)")
+                                    .foregroundStyle(.gray)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                        }
+                        Button("削除") {
+                            isShowAlert.toggle()
                         }
                     }
-                    Section(){
-                        HStack {
-                            Text("単語内容")
-                                .font(.title3)
-                            Text("\(wordData.content)")
-                                .foregroundStyle(.gray)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        }
+                } else {
+                    Text("Loading...")
+                }
+            }
+            .onAppear {
+                   viewModel.resetId()
+                 Task {
+                     await viewModel.getWordItem(wordId)
+                 }
+             }
+            .alert(
+                "現在の単語を削除しますか?",
+                isPresented: $isShowAlert,
+                presenting: wordId
+            ) { wordId in
+                Button("キャンセル", role: .cancel) {
+                    isShowAlert.toggle()
+                }
+                Button("削除", role: .destructive) {
+                    Task {
+                        await viewModel.onDeleteItem(wordId)
+
+                        dismiss()
                     }
                 }
-            } else {
-                Text("Loading...")
+            } message: {_ in
+                Text("削除された単語は戻すことはできません。")
             }
-        }
-        .onAppear {
-               viewModel.resetId()
-             Task {
-                 await viewModel.getWordItem(wordId)
-             }
-         }
     }
+
 }
 
 struct PopupEditView: View {

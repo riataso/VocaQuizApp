@@ -19,7 +19,6 @@ struct CreateQuestionView: View {
                     }
                 }
                 .listStyle(PlainListStyle())
-
                 .navigationTitle("問題一覧")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -34,6 +33,10 @@ struct CreateQuestionView: View {
                 .fullScreenCover(isPresented: $viewModel.isCustomDialogShowing) {
                     PopupView(isPresented: $viewModel.isCustomDialogShowing, viewModel: viewModel)
                 }
+            }
+            .onAppear {
+                //再描画のタイミングで再取得する
+                viewModel.lordWord()
             }
         }
     }
@@ -130,7 +133,7 @@ struct CreateQuestionView: View {
                     .padding(.horizontal, 5)
 
                     Button {
-                        viewModel.createWordItem(viewModel.inputWord, viewModel.inputContent)
+                        viewModel.onCreateItem(viewModel.inputWord, viewModel.inputContent)
                         isPresented = false
                         viewModel.inputContent = ""
                         viewModel.inputWord = ""

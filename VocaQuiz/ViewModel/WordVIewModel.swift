@@ -2,6 +2,7 @@ import Foundation
 
 class WordViewModel: ObservableObject{
     @Published var wordItem: WordEntity?
+    @Published var wordItems: [WordEntity]?
     @Published var isCustomDialogShowing: Bool = false
     @Published var inputContent: String = ""
     @Published var inputWord: String = ""
@@ -13,8 +14,18 @@ class WordViewModel: ObservableObject{
     }
 
     @MainActor
-    func createWordItem(_ word: String, _ content: String) {
-        wordItemUseCase.onTapCreateButton(word, content)
+    func onCreateItem(_ word: String, _ content: String) {
+        wordItemUseCase.createWordItem(word, content)
+    }
+
+    @MainActor
+    func onDeleteItem(_ id: UUID) async {
+        await wordItemUseCase.deleteWordItem(id)
+    }
+
+    @MainActor
+    func lordWord() {
+        wordItems = allGetWordItem()
     }
 
     @MainActor
