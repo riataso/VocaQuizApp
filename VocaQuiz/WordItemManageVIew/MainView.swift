@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject var viewModel = WordViewModel(wordItemUseCase: WordItemUseCase())
+    @StateObject var createViewModel =  WordViewModel(wordItemUseCase: WordItemUseCase())
+
 
     var body: some View {
         NavigationStack {
@@ -34,7 +35,7 @@ struct MainView: View {
             Spacer()
                 .frame(height: 40)
 
-            NavigationLink(destination: CreateQuestionView(viewModel: viewModel)) {
+            NavigationLink(destination: CreateQuestionView(viewModel: createViewModel)) {
                 Text("問題を編集")
                     .font(.title3)
                     .fontWeight(.medium)

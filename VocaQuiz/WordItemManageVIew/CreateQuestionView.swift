@@ -41,14 +41,6 @@ struct CreateQuestionView: View {
         }
     }
 
-//    struct TaskListView_Previews: PreviewProvider {
-//
-//        static var previews: some View {
-//            let viewModel:  WordViewModel(wordItemUseCase: WordItemUseCase())
-//            CreateQuestionView(viewModel: viewModel)
-//        }
-//    }
-
     struct PopupView: View {
         @Binding var isPresented: Bool
         @ObservedObject var viewModel: WordViewModel
