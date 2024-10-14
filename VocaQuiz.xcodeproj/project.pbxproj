@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		482E400F2CBAAFC900AF2429 /* WordQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482E400E2CBAAFC900AF2429 /* WordQuestionView.swift */; };
+		482E40112CBAB00000AF2429 /* ContentQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482E40102CBAB00000AF2429 /* ContentQuestionView.swift */; };
 		484773E52BFA21FD006AC081 /* VocaQuizApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773E42BFA21FD006AC081 /* VocaQuizApp.swift */; };
 		484773E72BFA21FD006AC081 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484773E62BFA21FD006AC081 /* ContentView.swift */; };
 		484773E92BFA21FE006AC081 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 484773E82BFA21FE006AC081 /* Assets.xcassets */; };
@@ -18,9 +20,14 @@
 		488B9EEF2C9DC8FF00AF7DB0 /* WordEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9EEE2C9DC8FF00AF7DB0 /* WordEntity.swift */; };
 		489782672C06140C009A610E /* CreateQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489782662C06140C009A610E /* CreateQuestionView.swift */; };
 		48AD112D2CA5B51A004702E9 /* WordVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AD112C2CA5B51A004702E9 /* WordVIewModel.swift */; };
+		48C922822CAFCB1D001085F2 /* SelectQuizTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C922812CAFCB1D001085F2 /* SelectQuizTypeView.swift */; };
+		48C922852CAFDE14001085F2 /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C922842CAFDE14001085F2 /* QuizViewModel.swift */; };
+		48C922892CB57903001085F2 /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C922882CB57903001085F2 /* QuestionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		482E400E2CBAAFC900AF2429 /* WordQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordQuestionView.swift; sourceTree = "<group>"; };
+		482E40102CBAB00000AF2429 /* ContentQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentQuestionView.swift; sourceTree = "<group>"; };
 		484773E12BFA21FD006AC081 /* VocaQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VocaQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		484773E42BFA21FD006AC081 /* VocaQuizApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocaQuizApp.swift; sourceTree = "<group>"; };
 		484773E62BFA21FD006AC081 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -33,6 +40,9 @@
 		488B9EEE2C9DC8FF00AF7DB0 /* WordEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordEntity.swift; sourceTree = "<group>"; };
 		489782662C06140C009A610E /* CreateQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuestionView.swift; sourceTree = "<group>"; };
 		48AD112C2CA5B51A004702E9 /* WordVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordVIewModel.swift; sourceTree = "<group>"; };
+		48C922812CAFCB1D001085F2 /* SelectQuizTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectQuizTypeView.swift; sourceTree = "<group>"; };
+		48C922842CAFDE14001085F2 /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
+		48C922882CB57903001085F2 /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +75,11 @@
 		484773E32BFA21FD006AC081 /* VocaQuiz */ = {
 			isa = PBXGroup;
 			children = (
-				488B9EEA2C9DB97900AF7DB0 /* Repository */,
-				489782652C061332009A610E /* VIew */,
-				484773FA2BFA4FD1006AC081 /* ViewModel */,
+				48C922802CADB2E9001085F2 /* QuizView */,
+				48C922832CAFD07F001085F2 /* QuizViewModel */,
+				489782652C061332009A610E /* WordItemManageVIew */,
+				488B9EEA2C9DB97900AF7DB0 /* WordItemRepository */,
+				484773FA2BFA4FD1006AC081 /* WordItemManageViewModel */,
 				484773E42BFA21FD006AC081 /* VocaQuizApp.swift */,
 				484773E62BFA21FD006AC081 /* ContentView.swift */,
 				484773E82BFA21FE006AC081 /* Assets.xcassets */,
@@ -84,32 +96,51 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		484773FA2BFA4FD1006AC081 /* ViewModel */ = {
+		484773FA2BFA4FD1006AC081 /* WordItemManageViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				488B9EE82C9DB13E00AF7DB0 /* WordManageUseCase.swift */,
 				48AD112C2CA5B51A004702E9 /* WordVIewModel.swift */,
 			);
-			path = ViewModel;
+			path = WordItemManageViewModel;
 			sourceTree = "<group>";
 		};
-		488B9EEA2C9DB97900AF7DB0 /* Repository */ = {
+		488B9EEA2C9DB97900AF7DB0 /* WordItemRepository */ = {
 			isa = PBXGroup;
 			children = (
 				488B9EEC2C9DBC0800AF7DB0 /* WordRepository.swift */,
 				488B9EEE2C9DC8FF00AF7DB0 /* WordEntity.swift */,
 			);
-			path = Repository;
+			path = WordItemRepository;
 			sourceTree = "<group>";
 		};
-		489782652C061332009A610E /* VIew */ = {
+		489782652C061332009A610E /* WordItemManageVIew */ = {
 			isa = PBXGroup;
 			children = (
 				489782662C06140C009A610E /* CreateQuestionView.swift */,
 				486881BC2C18735900E0F52D /* WordManageView.swift */,
 				488B9EE32C9CB4BA00AF7DB0 /* MainView.swift */,
 			);
-			path = VIew;
+			path = WordItemManageVIew;
+			sourceTree = "<group>";
+		};
+		48C922802CADB2E9001085F2 /* QuizView */ = {
+			isa = PBXGroup;
+			children = (
+				48C922812CAFCB1D001085F2 /* SelectQuizTypeView.swift */,
+				48C922882CB57903001085F2 /* QuestionView.swift */,
+				482E400E2CBAAFC900AF2429 /* WordQuestionView.swift */,
+				482E40102CBAB00000AF2429 /* ContentQuestionView.swift */,
+			);
+			path = QuizView;
+			sourceTree = "<group>";
+		};
+		48C922832CAFD07F001085F2 /* QuizViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				48C922842CAFDE14001085F2 /* QuizViewModel.swift */,
+			);
+			path = QuizViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,13 +215,18 @@
 			files = (
 				488B9EE92C9DB13E00AF7DB0 /* WordManageUseCase.swift in Sources */,
 				484773E72BFA21FD006AC081 /* ContentView.swift in Sources */,
+				482E400F2CBAAFC900AF2429 /* WordQuestionView.swift in Sources */,
+				48C922892CB57903001085F2 /* QuestionView.swift in Sources */,
 				488B9EEF2C9DC8FF00AF7DB0 /* WordEntity.swift in Sources */,
 				488B9EE42C9CB4BA00AF7DB0 /* MainView.swift in Sources */,
 				489782672C06140C009A610E /* CreateQuestionView.swift in Sources */,
 				488B9EED2C9DBC0800AF7DB0 /* WordRepository.swift in Sources */,
+				48C922852CAFDE14001085F2 /* QuizViewModel.swift in Sources */,
 				484773E52BFA21FD006AC081 /* VocaQuizApp.swift in Sources */,
+				482E40112CBAB00000AF2429 /* ContentQuestionView.swift in Sources */,
 				48AD112D2CA5B51A004702E9 /* WordVIewModel.swift in Sources */,
 				486881BD2C18735900E0F52D /* WordManageView.swift in Sources */,
+				48C922822CAFCB1D001085F2 /* SelectQuizTypeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
