@@ -1,10 +1,3 @@
-//
-//  VocaQuizApp.swift
-//  VocaQuiz
-//
-//  Created by 佐藤来 on 2024/05/19.
-//
-
 import SwiftUI
 
 @main

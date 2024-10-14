@@ -2,8 +2,13 @@ import Foundation
 import SwiftData
 
 class WordRepository {
+    static let shared = WordRepository()
     private let modelContainer = try? ModelContainer(for: WordEntity.self)
-    
+
+    private init() {
+        
+    }
+
     @MainActor
     func create(_ word: String, _ content: String) {
         let wordItem = WordEntity(id: UUID(), content: content,word: word)
